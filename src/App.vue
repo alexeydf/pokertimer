@@ -4,7 +4,7 @@
       <label for="tempo-blind">Tempo do Blind:</label>
       <div class="form">
         <input type="number" v-model="tempoEscolhido" id="tempo-blind">
-        <button @click="adicionar" class="btn btn-form">+</button><button class="btn btn-form">-</button>
+        <button @click="adicionar" class="btn btn-form">+</button><button @click="diminuir" class="btn btn-form">-</button>
       </div>
     </header>
 
@@ -14,7 +14,7 @@
       </section>
 
       <section class="btns">
-        <button class="btn btn-acoes"><span class="material-symbols-outlined">fast_rewind</span></button>
+        <button @click="anterior" class="btn btn-acoes"><span class="material-symbols-outlined">fast_rewind</span></button>
         <button v-show="startBtn" @click="startTimer" class="btn btn-acoes"><span class="material-symbols-outlined">play_arrow</span></button>
         <button v-show="pauseBtn" @click="pauseTimer" class="btn btn-acoes"><span class="material-symbols-outlined">pause</span></button>
         <button @click="finalizar" class="btn btn-acoes"><span class="material-symbols-outlined">stop</span></button>
@@ -67,6 +67,13 @@ export default {
     adicionar(){
       this.tempoEscolhido = this.tempoEscolhido + 5;
     },
+    diminuir(){
+      if(this.tempoEscolhido > 0){
+        this.tempoEscolhido = this.tempoEscolhido - 5;
+      }else{
+        return false
+      }
+    },
     startTimer(){
       if(this.tempoEscolhido <= 0 || !this.startBtn){
         return false;
@@ -95,7 +102,10 @@ export default {
       if(distance < 0){
       
         if(this.index+1 >= this.blinds.length){
-          this.resetValores();
+          this.startBtn = true;
+          this.pauseBtn = false
+          this.finalizar();
+          return false;
         }else{
           this.index++;
           this.startBtn = true;
@@ -128,13 +138,16 @@ export default {
     },
     finalizar(){
       this.startBtn = true;
+      this.pauseBtn = false;
       this.resetValores();
     },
     proximo(){
-      clearInterval(this.intervalo);
+      
       if(this.index + 1 < this.blinds.length){
+        clearInterval(this.intervalo);
         this.index++;
         this.pause = false;
+        this.startBtn = true;
         this.startTimer();
       }else{
         this.resetValores();
@@ -142,13 +155,15 @@ export default {
       
     },
     anterior(){
-      clearInterval(this.intervalo);
-      if(this.index + 1 < this.blinds.length){
-        this.index++;
+      
+      if(this.index + 1 > 1){
+        clearInterval(this.intervalo);
+        this.index--;
+        this.startBtn = true;
         this.pause = false;
         this.startTimer();
       }else{
-        this.resetValores();
+        return false;
       }
     },
     resetValores(){
@@ -163,7 +178,7 @@ export default {
       this.tempoEscolhido = 0;
       this.fim = null;
       this.intervalo = null;
-      this.blind = null;
+      
     }
   }
 }
