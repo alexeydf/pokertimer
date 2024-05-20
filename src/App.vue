@@ -35,6 +35,7 @@
 <script>
 import './styles/global.css';
 import { blinds } from './blinds/blinds';
+import alert from './assets/alert.mp3';
 
 export default {
   name: 'App',
@@ -57,6 +58,7 @@ export default {
       level: null,
       tempoFaltante: null,
       index: 0,
+      sound: new Audio(alert),
       blinds 
     }
    },
@@ -82,14 +84,13 @@ export default {
       if(this.pause){
         this.fim = new Date().getTime() + this.tempoFaltante;
         this.pause = false;
-        this.startBtn = false;
-        this.pauseBtn = true;
       }else{
-        this.startBtn = false;
-        this.pauseBtn = true;
         this.tempoRegressivo = this.tempoEscolhido * 60 * 1000;
         this.fim = new Date().getTime() + this.tempoRegressivo;
       }
+
+      this.startBtn = false;
+      this.pauseBtn = true;
 
       this.updateTimer();
       this.intervalo = setInterval(this.updateTimer, 1000);
@@ -100,13 +101,14 @@ export default {
       const distance = this.fim - now
 
       if(distance < 0){
-      
+        clearInterval(this.intervalo);
         if(this.index+1 >= this.blinds.length){
           this.startBtn = true;
           this.pauseBtn = false
           this.finalizar();
           return false;
         }else{
+          this.sound.play();
           this.index++;
           this.startBtn = true;
           this.startTimer();
@@ -168,16 +170,20 @@ export default {
     },
     resetValores(){
       clearInterval(this.intervalo);
-      this.tempoFaltante = null;
+      this.tempoFaltante = 0;
       this.tempoRegressivo = 0;
       this.minutos = 0;
       this.segundos = 0;
-      this.start = true;
       this.pause = false;
       this.index = 0;
       this.tempoEscolhido = 0;
-      this.fim = null;
-      this.intervalo = null;
+      this.fim = 0;
+      this.intervalo = 0;
+      this.bigBlind = null;
+      this.smallBlind = null;
+      this.level = null;
+      this.startBtn = true;
+      this.pauseBtn = false;
       
     }
   }
