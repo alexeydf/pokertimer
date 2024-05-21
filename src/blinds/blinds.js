@@ -8,5 +8,18 @@ export const blinds = [
   {level: 7, smallBlind: 250, bigBlind: 500},
   {level: 8, smallBlind: 300, bigBlind: 600},
   {level: 9, smallBlind: 400, bigBlind: 800},
-  {level: 10, smallBlind: 500, bigBlind: 1000}
+  {level: 10, smallBlind: 500, bigBlind: 1000},
+  {level: 11, smallBlind: 1000, bigBlind: 2000},
+  {level: 12, smallBlind: 1500, bigBlind: 3000},
+  {level: 13, smallBlind: 2000, bigBlind: 4000},
+  {level: 14, smallBlind: 2500, bigBlind: 5000},
+  {level: 15, smallBlind: 3000, bigBlind: 6000},
+  {level: 16, smallBlind: 3500, bigBlind: 7000},
+  {level: 17, smallBlind: 4000, bigBlind: 8000},
+  {level: 18, smallBlind: 5000, bigBlind: 10000},
+  {level: 19, smallBlind: 6000, bigBlind: 12000},
+  {level: 20, smallBlind: 7000, bigBlind: 14000},
+  {level: 21, smallBlind: 8000, bigBlind: 16000},
+  {level: 22, smallBlind: 9000, bigBlind: 18000},
+  {level: 23, smallBlind: 10000, bigBlind: 20000}
 ]

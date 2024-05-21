@@ -22,7 +22,7 @@
       </section>
 
       <section class="info-blind">
-        <p>Level: {{ level }}</p>
+        <p>Nível: {{ level }}</p>
 
         <div class="blind">
           {{ smallBlind }} / {{ bigBlind }}
